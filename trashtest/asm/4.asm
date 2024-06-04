@@ -1,0 +1,47 @@
+MVI B, 0FH; B = 0FH
+MVI C, FFH; C = FFH
+MVI A, 00H; A = 00H
+STA 2400H; 2400H = 00H
+LXI H, 2402H;
+MOV M, C; 2402H = FFH
+MOV A, B; A = 0FH
+LDA 2402H; A = FFH
+
+A = FFH
+B = 0FH
+C = FFH
+
+------------------------------
+2400H -> 00  | 2401H -> FFH | 2402H -> 0FH | 2403H -> 1AH
+
+	LHLD 2402H; L = 0FH, H = 1AH
+	LDA 2400H; A = 2400H = 00H
+	MOV B, L; B = 0FH
+	MOV C, H; C = 1AH
+	MVI D, 03; D = 03
+	MOV E, A; E = 00H
+	SHLD 2400H; 2400H = 0FH, 2401H = 1AH
+	STA 2402H; 2402H = 00H
+
+2400H -> 0FH  | 2401H -> 1AH | 2402H -> 00H | 2403H -> 1AH
+
+
+-----------------------------------
+1- 
+LDA 05H
+STA 2400H
+STA 2401H
+STA 2402H
+
+MVI A, 05H
+STA 2400H
+STA 2401H
+STA 2402H
+
+LXI H, 2000H
+MVI M, 05H
+INX H
+MVI M, 05H
+INX H
+MVI M, 05H
+
