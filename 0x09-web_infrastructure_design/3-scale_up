@@ -1,0 +1,22 @@
+Scale-Up Infrastructure:
+
+Components:
+
+- Load Balancer Cluster: HAProxy #1 + HAProxy #2, VIP, Round Robin
+- Web Servers: Nginx, serve static files & reverse proxy to App Server
+- Application Server: Gunicorn/uWSGI, executes business logic
+- Database Server: MySQL Primary (optionally with Replica for reads)
+
+Why each was added:
+
+- Extra Server: Dedicated Application Server to separate concerns
+- LB Cluster: Redundancy and high availability
+- Component Split: Independent scaling, isolation of failures
+
+Flow:
+
+1. User → DNS → LB Cluster (VIP)
+2. LB forwards request to one of Web Servers
+3. Web Server sends dynamic requests to App Server
+4. App Server interacts with DB, returns response
+5. Web Server sends final response to user

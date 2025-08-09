@@ -1,0 +1,27 @@
+0. Simple Web Stack
+
+Architecture:
+[User Browser] -> [DNS: www.foobar.com -> 8.8.8.8] -> [Server: Nginx -> App Server -> MySQL DB]
+
+Server IP: 8.8.8.8
+Web Server: Nginx
+Application Server: Gunicorn running Flask
+Database: MySQL
+Application Code: /var/www/app/
+
+Flow:
+
+1. User requests www.foobar.com
+2. DNS resolves to server IP (8.8.8.8)
+3. Nginx serves static files or forwards to App Server
+4. App Server processes and queries MySQL if needed
+5. Response returned to user via Nginx
+
+DNS Type:
+The www record is an A record pointing to 8.8.8.8
+
+Issues:
+
+- SPOF: one server fails → site down
+- Maintenance downtime when updating code or restarting services
+- No scaling: one server cannot handle high traffic

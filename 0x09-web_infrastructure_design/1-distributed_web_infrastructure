@@ -1,0 +1,33 @@
+1. Distributed Web Infrastructure
+
+Components:
+
+- Load Balancer: HAProxy, Round Robin, Active-Active setup
+- Web Servers: Nginx + App Server (Gunicorn/Django)
+- Database Cluster: MySQL Primary + Replica
+
+Flow:
+
+1. User requests www.foobar.com
+2. DNS resolves to LB IP 8.8.8.8
+3. LB distributes traffic between Server 1 and Server 2
+4. Each server processes requests, queries DB as needed
+5. DB Primary handles writes, Replica handles reads
+
+Advantages:
+
+- Better availability
+- Load distribution
+- Faster reads with DB Replica
+
+Issues:
+
+- SPOF: Load Balancer
+- No HTTPS
+- No firewall
+- No monitoring
+
+LB Setup:
+
+- Algorithm: Round Robin
+- Active-Active: both servers handle requests at the same time

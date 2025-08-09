@@ -1,0 +1,22 @@
+Secured & Monitored Web Infrastructure:
+
+Components:
+
+- Load Balancer: HAProxy, Round Robin, Active-Active, SSL termination
+- 3 Firewalls: Network-level before LB, host-level before each Web/App Server
+- HTTPS via SSL certificate for www.foobar.com
+- Web/App Servers: Nginx + Gunicorn, Application Code
+- MySQL DB: Primary + Replica
+- Monitoring Clients on each server for logs, QPS, metrics
+
+Flow:
+
+1. User → DNS → LB → Firewall → Web/App Server → Database
+2. Monitoring agents collect and send metrics/logs
+3. HTTPS encrypts all external communication
+
+Issues:
+
+- SSL termination at LB leaves internal traffic unencrypted
+- Single DB write node is SPOF
+- Same components on all servers increases attack risk
